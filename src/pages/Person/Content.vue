@@ -29,7 +29,7 @@ import { useRoute } from 'vue-router';
 import { usePreFetch } from 'src/composables/prefetch';
 
 defineOptions({
-  name: 'PersonPage',
+  name: 'PersonContent',
 });
 
 const personStore = usePersonStore();
