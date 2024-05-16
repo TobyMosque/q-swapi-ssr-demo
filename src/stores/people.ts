@@ -29,8 +29,6 @@ export const usePeopleStore = defineStore('people', () => {
 
     people.value = data.value?.results ?? [];
     count.value = data.value?.count ?? 0;
-
-    console.log(error.value);
   }
 
   return {
