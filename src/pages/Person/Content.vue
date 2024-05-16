@@ -25,23 +25,26 @@
 import { usePersonStore } from 'src/stores/person';
 import { storeToRefs } from 'pinia';
 import { useMeta } from 'quasar';
+import { useRoute } from 'vue-router';
+import { usePreFetch } from 'src/composables/prefetch';
 
 defineOptions({
   name: 'PersonPage',
-  async preFetch({ store, currentRoute }) {
-    if (typeof currentRoute.params.id !== 'string') {
-      throw 'invalid parameter type';
-    }
-
-    const id = parseInt(currentRoute.params.id);
-    const personStore = usePersonStore(store);
-    await personStore.fetchPerson(id);
-  },
 });
 
 const personStore = usePersonStore();
-const { id, person } = storeToRefs(personStore);
+const route = useRoute();
 
+await usePreFetch(async () => {
+  if (typeof route.params.id !== 'string') {
+    throw 'invalid parameter type';
+  }
+
+  const id = parseInt(route.params.id);
+  await personStore.fetchPerson(id);
+});
+
+const { id, person } = storeToRefs(personStore);
 useMeta(() => ({
   title: `Person ${id.value} - ${person.value?.name}`,
 }));
