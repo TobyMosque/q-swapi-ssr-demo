@@ -19,27 +19,23 @@ export async function createFetch(pinia: Pinia) {
     innerFetch = window.fetch;
   }
 
-  console.log(innerFetch);
   const fetch = createFetchFn({
     baseUrl: 'https://swapi.dev/api/',
     options: {
       fetch: innerFetch,
-      beforeFetch({ url, options }) {
+      beforeFetch({ options }) {
         const appStore = useAppStore(pinia);
         options.headers = {
           ...options.headers,
           'Content-Type': 'application/json',
           Authorization: `Bearer ${appStore.token}`,
         };
-        console.log(url);
         return { options };
       },
       onFetchError(ctx) {
-        console.log('onFetchError:', ctx);
         return ctx;
       },
       afterFetch(ctx) {
-        console.log('afterFetch:', ctx);
         return ctx;
       },
     },
