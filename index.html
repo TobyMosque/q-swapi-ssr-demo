@@ -38,8 +38,8 @@
     />
     <link rel="icon" type="image/ico" href="favicon.ico" />
     <style type="text/css">
-      .splash-screen::after {
-        content: '... Loading ...';
+      .splash-screen {
+        content: '';
         position: absolute;
         top: 0px;
         left: 0px;
@@ -53,7 +53,10 @@
       }
     </style>
   </head>
-  <body class="splash-screen">
+  <body class="">
     <!-- quasar:entry-point -->
+    <div class="splash-screen">
+      <img src="/favicon.ico" />
+    </div>
   </body>
 </html>
