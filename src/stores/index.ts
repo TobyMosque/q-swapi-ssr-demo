@@ -1,5 +1,5 @@
-import { store } from 'quasar/wrappers'
-import { createPinia } from 'pinia'
+import { store } from 'quasar/wrappers';
+import { createPinia } from 'pinia';
 import { Router } from 'vue-router';
 
 /*
@@ -22,11 +22,15 @@ declare module 'pinia' {
  * with the Store instance.
  */
 
-export default store((/* { ssrContext } */) => {
-  const pinia = createPinia()
+export default store(async (/* { ssrContext } */) => {
+  if (process.env.CLIENT) {
+    const { checkPwa } = await import('src/composables/prefetch');
+    checkPwa();
+  }
+  const pinia = createPinia();
 
   // You can add Pinia plugins here
   // pinia.use(SomePiniaPlugin)
 
-  return pinia
-})
+  return pinia;
+});

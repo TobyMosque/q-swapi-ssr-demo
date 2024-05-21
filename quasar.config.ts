@@ -13,7 +13,11 @@ export default configure((/* ctx */) => {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli-vite/boot-files
-    boot: ['fetch', 'prefetch'],
+    boot: [
+      { path: 'fetch/client', server: false },
+      { path: 'fetch/server', client: false },
+      'prefetch',
+    ],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#css
     css: ['app.scss'],
@@ -132,7 +136,7 @@ export default configure((/* ctx */) => {
       // manualStoreHydration: true,
       // manualPostHydrationTrigger: true,
 
-      pwa: false,
+      pwa: true,
 
       // pwaOfflineHtmlFilename: 'offline.html', // do NOT use index.html as name!
       // will mess up SSR

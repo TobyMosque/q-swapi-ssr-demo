@@ -10,19 +10,14 @@ declare module 'pinia' {
   }
 }
 
-export async function createFetch(pinia: Pinia) {
-  let innerFetch: UseFetchOptions['fetch'];
-  if (process.env.SERVER) {
-    innerFetch = (await import('node-fetch')).default as never;
-  }
-  if (process.env.CLIENT) {
-    innerFetch = window.fetch;
-  }
-
+export async function createFetch(
+  pinia: Pinia,
+  _fetch: UseFetchOptions['fetch'],
+) {
   const fetch = createFetchFn({
     baseUrl: 'https://swapi.dev/api/',
     options: {
-      fetch: innerFetch,
+      fetch: _fetch,
       beforeFetch({ options }) {
         const appStore = useAppStore(pinia);
         options.headers = {
